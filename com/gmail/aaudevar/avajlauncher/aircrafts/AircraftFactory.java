@@ -5,8 +5,18 @@ import com.gmail.aaudevar.avajlauncher.aircrafts.Coordinates;
 
 public class AircraftFactory {
 	private static long id = 0;
+	private static AircraftFactory instance = null;
 
-	public static Flyable newAircraft(String p_type, String p_name, Coordinates p_coordinates) throws SimulationException {
+	private AircraftFactory() {
+	}
+
+	public static AircraftFactory geAircraftFactory() {
+		if (instance == null)
+			instance = new AircraftFactory();
+		return instance;
+	}
+
+	public Flyable newAircraft(String p_type, String p_name, Coordinates p_coordinates) throws SimulationException {
 
 		if (p_type.toLowerCase().equals("baloon")) {
 			return new Baloon(AircraftFactory.nextId(), p_name, p_coordinates);
@@ -20,11 +30,11 @@ public class AircraftFactory {
 		else throw new SimulationException("Error: the type " + p_type + " doesn't exist");
 	}
 
-	public static Coordinates newCoordinates(int p_longitude, int p_latitude, int p_height) {
+	public Coordinates newCoordinates(int p_longitude, int p_latitude, int p_height) {
 		return new Coordinates(p_longitude, p_latitude,p_height);
 	}
 
-	public static long nextId() {
+	static private long nextId() {
 		return id++;
 	}
 }

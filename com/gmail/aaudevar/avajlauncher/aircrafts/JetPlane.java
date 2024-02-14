@@ -4,15 +4,15 @@ import com.gmail.aaudevar.avajlauncher.Log;
 import com.gmail.aaudevar.avajlauncher.WeatherTower;
 import java.util.HashMap;
 
-public class JetPlane extends Aircraft implements Flyable {
+public class JetPlane extends Aircraft {
 
-	protected WeatherTower weatherTower;
 
 	public JetPlane(long p_id, String p_name, Coordinates p_coordinate) {
 		super(p_id, p_name, p_coordinate);
 		this.type = "JetPlane";
 	}
 
+	@Override
 	public void updateConditions() {
 
 		String weather = this.weatherTower.getWeather(this.coordinate);
@@ -48,10 +48,5 @@ public class JetPlane extends Aircraft implements Flyable {
 			Log.logLine(this.getId() + " landing.");
 			this.weatherTower.unregister(this);
 		}
-	}
-
-	public void registerTower(WeatherTower tower) {
-		this.weatherTower = tower;
-		this.weatherTower.register(this);
 	}
 }

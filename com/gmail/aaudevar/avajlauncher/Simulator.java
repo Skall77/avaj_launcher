@@ -13,6 +13,7 @@ public class Simulator {
 	private Log log = new Log();
 	private WeatherTower tower;
 	private ArrayList<Flyable> aircrafts = new ArrayList<>();
+	private AircraftFactory aircraftFactory= AircraftFactory.geAircraftFactory();
 
 	private Simulator(){	
 	}
@@ -52,8 +53,8 @@ public class Simulator {
 					if (coordinate < 1)
 					throw new SimulationException("Error: line #" + lineCount + " LONGITUDE LATITUDE HEIGHT must be positive Integer");
 				}
-				Coordinates c = AircraftFactory.newCoordinates(coordinates[0], coordinates[1], coordinates[2]);
-				aircrafts.add(AircraftFactory.newAircraft(split[0], split[1], c));
+				Coordinates c = aircraftFactory.newCoordinates(coordinates[0], coordinates[1], coordinates[2]);
+				aircrafts.add(aircraftFactory.newAircraft(split[0], split[1], c));
 			} catch (NumberFormatException e) {
 				throw new SimulationException("Error: line #" + lineCount + " LONGITUDE LATITUDE HEIGHT must be positive Integer");
 			}
